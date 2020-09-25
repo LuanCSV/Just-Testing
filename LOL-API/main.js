@@ -57,23 +57,18 @@ callAPI();
 
 function searchChampions() {
     
-    const filter = searchBar.value.toLowerCase().split("")
-    console.log(filter)
+    const filter = searchBar.value.toLowerCase()
+
     let cards = main.querySelectorAll('article');
     for (let i = 0; i < cards.length; i++) {
         const searchedName = cards[i].getElementsByTagName("h5")[0];
-        const nameValue = (searchedName.innerText || searchedName.textContent).toLowerCase().split("")
-        const valor = nameValue.some(le => filter.includes(le));
-        if (valor || filter.length === 0) {
+        const nameValue = (searchedName.innerText || searchedName.textContent).toLowerCase()
+        if(!nameValue.indexOf(filter)){
             cards[i].style.display = ""
         } else {
-            cards[i].style.display = "none"
+             cards[i].style.display = "none"
         }   
     }
-    // const searchTool = cards.getElementByTag('h5')
-    // let filter = searchBar.value.toUpperCase();
-    // console.log(searchTool)
-
 } 
 
 document.querySelector('#searchButton').addEventListener('click', (event) => {
