@@ -1,7 +1,8 @@
 
 URL = 'http://ddragon.leagueoflegends.com/cdn/10.19.1/data/en_US/champion.json'
 
-let main = document.querySelector('#main');
+const main = document.querySelector('#main');
+const searchBar = document.querySelector("#searchBar");
 
 function callAPI() {
     
@@ -24,10 +25,7 @@ function callAPI() {
         // Chamando searchbar aqui, pois já traz todas as articles criadas, 
         // se eu chamasse dentro do cardPerChampion, ele entraria no loop do getChampInfos
         // E não chamo dentro do getChampInfos fora do Loop pq não faz muito sentido => na minha cabeça 
-
     });
-
-
 }
 
 function getChampInfos(list) {
@@ -43,7 +41,6 @@ function getChampInfos(list) {
 function cardPerChampion(name, title, id){
     const card = document.createElement('article');
     card.setAttribute('class','card');
-    
     card.innerHTML += `
         <img class="card-img-top" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${id}_0.jpg" alt="Imagem de capa do card">
         <div class="card-body position-relative">
@@ -56,12 +53,28 @@ function cardPerChampion(name, title, id){
     
 }
 
+callAPI();
+
 function searchChampions() {
-    const searchBar = document.getElementById('searchBar');
+    
+    const filter = searchBar.value.toLowerCase().split("")
+    console.log(filter)
     let cards = main.querySelectorAll('article');
+    for (let i = 0; i < cards.length; i++) {
+        const searchedName = cards[i].getElementsByTagName("h5")[0];
+        const nameValue = (searchedName.innerText || searchedName.textContent).toLowerCase().split("")
+        const valor = nameValue.some(le => filter.includes(le));
+        if (valor || filter.length === 0) {
+            cards[i].style.display = ""
+        } else {
+            cards[i].style.display = "none"
+        }   
+    }
+    // const searchTool = cards.getElementByTag('h5')
     // let filter = searchBar.value.toUpperCase();
-    console.log(searchBar)
-}
+    // console.log(searchTool)
+
+} 
 
 document.querySelector('#searchButton').addEventListener('click', (event) => {
     event.preventDefault()
@@ -69,4 +82,3 @@ document.querySelector('#searchButton').addEventListener('click', (event) => {
 })
 
 
-callAPI();
