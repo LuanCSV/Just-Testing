@@ -10,15 +10,18 @@
 
     $('#main').innerHTML += `
         <div class="bg-light p-3 row">
-            <input type="text" id="nome" class="col-6  mx-auto my-2 form-control" placeholder="Nome" >
-            <button id="addBotao" type="button" onclick="getName()" class="btn btn-primary col-5 mx-1 my-2">Adicionar nome</button> 
+            <input type="text" id="nome" class="col-8  mx-auto my-2 form-control" placeholder="Nome" >
+            <input type="text" id="sobrenome" class="col-8  mx-auto my-2 form-control" placeholder="Sobrenome" > 
+            <input type="number" id="cpf" class="col-8  mx-auto my-2 form-control" placeholder="CPF" > 
+            <button id="addBotao" type="button" onclick="getName()" class="btn btn-primary col-5 mx-auto my-2">Adicionar nome</button> 
             <ul id="lista" class="col-12">
             </ul>
         </div>
     `;
 
     function getName(){
-        let nomeDigitado = $('#nome').value
+        let nomeDigitado = $('#nome').value + ' ' +  $('#sobrenome').value
+        let cpfDigitado = $('#cpf').value
         let contadorEspaço = 0;
         let whiteSpaces = nomeDigitado.indexOf(" ");
         while ( whiteSpaces != -1 ) {
@@ -34,7 +37,8 @@
                 `
             }else{
                 $('#lista').innerHTML += ` 
-                    ${position++}º nome: ${nomeDigitado} || ${nomeDigitado.length - contadorEspaço} letras
+                    ${position++}º nome: ${nomeDigitado} || ${nomeDigitado.length - contadorEspaço} caractéres
+                    ${position}º CPF: ${cpfDigitado.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3-\$4")} 
                 </li>`
             }
     };
