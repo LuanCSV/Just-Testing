@@ -77,6 +77,23 @@ function movimentaPlayer(e) {
 
     if(teclasPermitidas.includes(teclaPressionada)) {
         console.log(teclaPressionada, "- Ok");
+        switch (teclaPressionada) {
+            case "ArrowUp":
+                player.y -= 50;
+                break;
+            case "ArrowDown":
+                player.y += 50;
+                break;
+            case "ArrowLeft":
+                player.x -= 50;
+                break;
+            case "ArrowRight":
+                player.x += 50;
+                break;
+        
+            default:
+                break;
+        }
     }else{
         console.log("Tecla não permitida: " + teclaPressionada);
     }
