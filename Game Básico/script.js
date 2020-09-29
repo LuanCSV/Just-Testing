@@ -79,18 +79,25 @@ function movimentaPlayer(e) {
         console.log(teclaPressionada, "- Ok");
         switch (teclaPressionada) {
             case "ArrowUp":
-                player.y -= 50;
+                if (player.y > 50) {
+                    player.y -= 50;
+                }
                 break;
             case "ArrowDown":
-                player.y += 50;
+                if (player.y < 400) {
+                    player.y += 50;
+                }
                 break;
             case "ArrowLeft":
-                player.x -= 50;
+                if (player.x > 50) {
+                    player.x -= 50;
+                }
                 break;
             case "ArrowRight":
-                player.x += 50;
+                if (player.x < 400) {
+                    player.x += 50;
+                }
                 break;
-        
             default:
                 break;
         }
