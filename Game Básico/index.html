@@ -13,10 +13,20 @@
     <fieldset>
         <legend>Player:</legend>
         <strong>Pontuação: </strong> <span id="pontuacao">0</span> </br>
+        <strong>Movimentos: </strong> <span id="movimentos">0</span> </br>
+        <strong>Movimentos Totais: </strong> <span id="movimentosTotais">0</span> </br>
+        <strong>Movimentos Restantes: </strong> <span id="movimentosRestantes">0</span> </br>
         <strong>Posição:</strong> <span id="posicaoX">0</span>x<span id="posicaoY">0</span>y
     </fieldset>
     
-    <script src="./script.js"></script>
+    <script src="./lib/utils.js"></script>
+    <script src="./lib/settings.js"></script>
+    <script src="./lib/script.js"></script>
+    <script src="./lib/events.js"></script>
+    <script src="./lib/render.js"></script>
     
+    <script>
+        renderizarJogo();
+    </script>
 </body>
 </html>
