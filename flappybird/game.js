@@ -29,6 +29,8 @@ function init() {
 }
 
 function createControlPlayer() {
+    players = [];
+    pipes = [];
     playerSelected = createPlayer();
 }
 
