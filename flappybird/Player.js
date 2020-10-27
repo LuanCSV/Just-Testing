@@ -21,6 +21,7 @@ export default class Player {
         this.spriteActive = 0;
         this.spriteSelected = 0;
         this.dy = 0;
+        this.alive = true;
     }
 
     jump(power) {
