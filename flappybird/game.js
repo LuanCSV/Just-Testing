@@ -19,6 +19,10 @@ var xFloor = 0;
 var playersAlive;
 var spaceBetwwenPipes = 110;
 
+var points = document.getElementById('points');
+var pontos = 9999999999;
+
+
 var lineGapPipeY = 0;
 var lineGapPipeX = 0;
 
@@ -39,6 +43,7 @@ function init() {
 function startGame() {
     players = [];
     pipes = [];
+    pontos = 0;
 }
 
 function createControlPlayer() {
@@ -253,7 +258,9 @@ function activateGravity() {
 function isRunning() {
     if (playersAlive > 0) {
         speedGame = speedGameOn;
+        
         if (frame % 120 === 0) {
+            pontos++;
             createPipe();
         }
     } else {
@@ -318,7 +325,7 @@ function animate() {
         drawLine();
 
 
-
+        points.innerText = pontos;
         // loop
         frame++;
         animate();
