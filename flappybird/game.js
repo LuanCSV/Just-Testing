@@ -1,6 +1,7 @@
 import Images from './Images.js';
 import Pipe from './Pipe.js';
 import Player from './Player.js';
+import Matrix from './ia/Matrix.js';
 
 
 var canvas = document.querySelector(`canvas`);
@@ -13,6 +14,8 @@ var gravity = 0.4;
 var friction = 0.2;
 var JumpPower = 7;
 var speedGame = 0;
+var speedGameOn = 2;
+var speedGameOff = 0;
 var xBack = 0;
 var xFloor = 0;
 var playersAlive;
@@ -25,12 +28,27 @@ document.addEventListener('keydown', sendCommandToPlayer);
 const { ImgBackground, ImgBase } = Images;
 
 function init() {
+    const m1 = new Matrix(2,2);
+    const m2 = new Matrix(2,2);
+    m1.randomize();
+    m2.randomize();
+    m1.print();
+    m1.mutation(0.1)
+    m1.print();
+    // m2.print();
+
+    // const soma = Matrix.multiply(m1, m2);
+    // soma.print();
     animate();
 }
 
-function createControlPlayer() {
+function startGame() {
     players = [];
     pipes = [];
+}
+
+function createControlPlayer() {
+    startGame();
     playerSelected = createPlayer();
 }
 
@@ -94,6 +112,9 @@ function drawFloor() {
 function drawPlayers() {
     for(const i in players){
         const p = players[i];
+        if (p.alive) {
+            p.distance += speedGame;
+        }
         
         // Asas animadas
         if (frame % 5 === 0 && p.alive) {
@@ -144,14 +165,17 @@ function verifyCollisions() {
             playersAlive++;
             if ((p.y + p.h) > canvas.height - 112) {
                 p.alive = false;
+                console.log(p.distance);
+                
             } else {
-                // 
+                
                 const pipe = getNextPipe(p);
                 if (pipe) {
                     const cPipe0 = collisionPipe(p, pipe[0]);
                     const cPipe1 = collisionPipe(p, pipe[1]);
                     if (cPipe0 || cPipe1) {
                         p.alive = false;
+                        console.log(p.distance);
                     }
                 }
             }
@@ -222,12 +246,12 @@ function activateGravity() {
 
 function isRunning() {
     if (playersAlive > 0) {
-        speedGame = 1.5;
+        speedGame = speedGameOn;
         if (frame % 120 === 0) {
             createPipe();
         }
     } else {
-        speedGame = 0;
+        speedGame = speedGameOff;
     }
 }
 

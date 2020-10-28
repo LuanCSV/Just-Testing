@@ -16,12 +16,26 @@ export default class Player {
                 Images.ImgBirdBlueUpFlap,
                 Images.ImgBirdBlue,
                 Images.ImgBirdBlueDownFlap
-            ]
+            ],
+            [
+                Images.ImgBirdRed,
+                Images.ImgBirdRedUpFlap,
+                Images.ImgBirdRed,
+                Images.ImgBirdRedDownFlap
+            ],
+            [
+                Images.ImgBirdYellow,
+                Images.ImgBirdYellowUpFlap,
+                Images.ImgBirdYellow,
+                Images.ImgBirdYellowDownFlap
+            ],
+
         ];
         this.spriteActive = 0;
-        this.spriteSelected = 0;
+        this.spriteSelected = Utils.randomIntFromRange(0,2);
         this.dy = 0;
         this.alive = true;
+        this.distance = 0;
     }
 
     jump(power) {
