@@ -1,6 +1,6 @@
 import Images from './Images.js';
 import Utils from './Utils.js';
-
+import NeuralNetwork from './ia/NeuralNetwork.js';
 
 
 export default class Player {
@@ -36,6 +36,16 @@ export default class Player {
         this.dy = 0;
         this.alive = true;
         this.distance = 0;
+        this.sensor = {
+            x:0,
+            y:0
+        }
+        // inputs 2
+        // hidden 2
+        // output 1
+        // learning 0
+        // peso - 1000
+        this.brain = new NeuralNetwork(2, 2, 1, 0, 1000);
     }
 
     jump(power) {

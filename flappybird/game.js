@@ -1,8 +1,6 @@
 import Images from './Images.js';
 import Pipe from './Pipe.js';
 import Player from './Player.js';
-import Matrix from './ia/Matrix.js';
-
 
 var canvas = document.querySelector(`canvas`);
 const ctx = canvas.getContext('2d');
@@ -14,31 +12,27 @@ var gravity = 0.4;
 var friction = 0.2;
 var JumpPower = 7;
 var speedGame = 0;
-var speedGameOn = 2;
+var speedGameOn = 3;
 var speedGameOff = 0;
 var xBack = 0;
 var xFloor = 0;
 var playersAlive;
-var spaceBetwwenPipes = 120;
+var spaceBetwwenPipes = 110;
+
+var lineGapPipeY = 0;
+var lineGapPipeX = 0;
+
+var numPlayers = 300;
+var autoMove = false;
 
 document.querySelector('#startGame').addEventListener('click', createControlPlayer);
-document.querySelector('#addPipe').addEventListener('click', createPipe);
+document.querySelector('#startPopulation').addEventListener('click', createPlayers);
+// document.querySelector('#addPipe').addEventListener('click', createPipe);
 document.addEventListener('keydown', sendCommandToPlayer);
 // Images
 const { ImgBackground, ImgBase } = Images;
 
 function init() {
-    const m1 = new Matrix(2,2);
-    const m2 = new Matrix(2,2);
-    m1.randomize();
-    m2.randomize();
-    m1.print();
-    m1.mutation(0.1)
-    m1.print();
-    // m2.print();
-
-    // const soma = Matrix.multiply(m1, m2);
-    // soma.print();
     animate();
 }
 
@@ -51,6 +45,7 @@ function createControlPlayer() {
     startGame();
     playerSelected = createPlayer();
 }
+
 
 function sendCommandToPlayer(e) {
     if(playerSelected && playerSelected.alive) {
@@ -74,8 +69,19 @@ function sendCommandToPlayer(e) {
 function createPlayer() {
     const p = new Player();
     players.push(p);
+    // console.log(JSON.stringify(p.brain));
     return p;
 }
+
+function createPlayers() {
+    startGame();
+    autoMove = true;
+    for (let x = 0; x < numPlayers; x++) {
+        createPlayer();
+        
+    }
+}
+
 
 function createPipe() {
     let p = new Pipe();
@@ -165,7 +171,7 @@ function verifyCollisions() {
             playersAlive++;
             if ((p.y + p.h) > canvas.height - 112) {
                 p.alive = false;
-                console.log(p.distance);
+                // console.log(p.distance);
                 
             } else {
                 
@@ -175,7 +181,7 @@ function verifyCollisions() {
                     const cPipe1 = collisionPipe(p, pipe[1]);
                     if (cPipe0 || cPipe1) {
                         p.alive = false;
-                        console.log(p.distance);
+                        // console.log(p.distance);
                     }
                 }
             }
@@ -255,18 +261,61 @@ function isRunning() {
     }
 }
 
+function calculatePlayersPositions() {
+    for (const i in players) {
+        let p = players [i];
+        let pipe = getNextPipe(p);
+
+        if (pipe) {
+            let gap = (pipe[0].y - (pipe[1].y + pipe[1].h));
+            ctx.beginPath();
+            let targetY = pipe[0].y - ((gap/2)-10) -(p.h/2);
+            let targetX = pipe[0].x - (pipe[0].w/2) + (p.w);
+            lineGapPipeY = targetY;
+            lineGapPipeX = targetX;
+            p.sensor.x = Math.ceil(p.x - targetX);
+            p.sensor.y = Math.ceil(p.y - targetY);
+            // console.log(p.sensor)
+        }
+    }
+}
+
+function drawLine() {
+    ctx.beginPath();
+    ctx.fillStyle = '#f00'
+    ctx.fillRect(0, lineGapPipeY, 288, 2);
+    ctx.fillRect(lineGapPipeX, 0, 2, 580);
+    ctx.closePath();
+}
+
+function autoMovePlayers() {
+    for (const i in players) {
+        let p = players[i];
+        if(p.alive){
+            let input = [p.sensor.x, p.sensor.y];
+            let resultNN = p.brain.predict(input, 'reLU');
+            // console.log(resultNN);
+            if (resultNN[0] > 0) {
+                p.jump(JumpPower);
+            }
+        }
+    }
+}
+
 function animate() {
     requestAnimationFrame(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // console.log(`ok`);
         activateGravity();
+        calculatePlayersPositions();
+        autoMovePlayers();
         verifyCollisions();
         drawBackground();
         drawPipes();
         drawFloor();
         drawPlayers();
         isRunning();
-
+        drawLine();
 
 
 
