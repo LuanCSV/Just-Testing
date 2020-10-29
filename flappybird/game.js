@@ -5,28 +5,30 @@ import Player from './Player.js';
 var canvas = document.querySelector(`canvas`);
 const ctx = canvas.getContext('2d');
 var players = [];
+var playersDead = [];
 var pipes = [];
 var playerSelected;
 var frame = 0;
 var gravity = 0.4;
-var friction = 0.2;
-var JumpPower = 7;
 var speedGame = 0;
-var speedGameOn = 3;
 var speedGameOff = 0;
 var xBack = 0;
 var xFloor = 0;
 var playersAlive;
+var friction = 0.2;
+
+var speedGameOn = 3;
+var JumpPower = 7;
 var spaceBetwwenPipes = 110;
 
 var points = document.getElementById('points');
-var pontos = 9999999999;
+var pontos = 0;
 
 
 var lineGapPipeY = 0;
 var lineGapPipeX = 0;
 
-var numPlayers = 300;
+var numPlayers = 200;
 var autoMove = false;
 
 document.querySelector('#startGame').addEventListener('click', createControlPlayer);
@@ -42,11 +44,13 @@ function init() {
 
 function startGame() {
     players = [];
+    playersDead = [];
     pipes = [];
     pontos = 0;
 }
 
 function createControlPlayer() {
+    autoMove = false;
     startGame();
     playerSelected = createPlayer();
 }
@@ -74,7 +78,7 @@ function sendCommandToPlayer(e) {
 function createPlayer() {
     const p = new Player();
     players.push(p);
-    // console.log(JSON.stringify(p.brain));
+
     return p;
 }
 
@@ -145,6 +149,7 @@ function drawPlayers() {
         if (!p.alive) {
             p.x -= speedGame;
             if (p.x + p.w < -10) {
+                playersDead.push(p);
                 players.splice(i, 1);
             }
         }
@@ -176,7 +181,7 @@ function verifyCollisions() {
             playersAlive++;
             if ((p.y + p.h) > canvas.height - 112) {
                 p.alive = false;
-                // console.log(p.distance);
+
                 
             } else {
                 
@@ -186,7 +191,7 @@ function verifyCollisions() {
                     const cPipe1 = collisionPipe(p, pipe[1]);
                     if (cPipe0 || cPipe1) {
                         p.alive = false;
-                        // console.log(p.distance);
+
                     }
                 }
             }
@@ -259,12 +264,50 @@ function isRunning() {
     if (playersAlive > 0) {
         speedGame = speedGameOn;
         
-        if (frame % 120 === 0) {
+        if (frame % 70 === 0) {
             pontos++;
             createPipe();
         }
     } else {
+        if (autoMove) {
+            generateNewPopulation(playersDead);
+        }
         speedGame = speedGameOff;
+    }
+}
+
+function generateNewPopulation(playersDead) {
+    if (speedGame !== speedGameOff) {
+        // const clone = [...playersDead];
+        // console.log(clone);
+        let bestPlayers = playersDead.sort(dynamicSort("distance", "desc"));
+        if (bestPlayers.length > 0) {
+            startGame();
+            for (let x = 0; x < numPlayers/2; x++) {
+                let p = createPlayer();
+                p.brain = bestPlayers[0].brain;
+                p.brain.mutation(0.05);
+            }
+            for (let x = 0; x < numPlayers/2; x++) {
+                createPlayer();
+            }
+        }
+    }
+}
+
+function dynamicSort(property, order) {
+    var sort_order = 1;
+    if (order === "desc") {
+        sort_order = -1;
+    }
+    return (a,b) => {
+        if (a[property] < b[property]) {
+            return -1 * sort_order;
+        } else if (a[property] > b[property]){
+            return 1 * sort_order;
+        } else {
+            return 0 * sort_order;
+        }
     }
 }
 
@@ -282,7 +325,7 @@ function calculatePlayersPositions() {
             lineGapPipeX = targetX;
             p.sensor.x = Math.ceil(p.x - targetX);
             p.sensor.y = Math.ceil(p.y - targetY);
-            // console.log(p.sensor)
+
         }
     }
 }
@@ -301,7 +344,7 @@ function autoMovePlayers() {
         if(p.alive){
             let input = [p.sensor.x, p.sensor.y];
             let resultNN = p.brain.predict(input, 'reLU');
-            // console.log(resultNN);
+
             if (resultNN[0] > 0) {
                 p.jump(JumpPower);
             }
@@ -312,10 +355,12 @@ function autoMovePlayers() {
 function animate() {
     requestAnimationFrame(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // console.log(`ok`);
+
         activateGravity();
         calculatePlayersPositions();
-        autoMovePlayers();
+        if (autoMove) {
+            autoMovePlayers();
+        }
         verifyCollisions();
         drawBackground();
         drawPipes();

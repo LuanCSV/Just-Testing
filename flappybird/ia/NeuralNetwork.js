@@ -59,6 +59,13 @@ export default class NeuralNetwork {
         return output;
     }
 
+    mutation(n = 0.1) {
+        // this.bias_ih.mutation(n);
+        // this.bias_ho.mutation(n);
+        this.weights_ih.mutation(n);
+        this.weights_ho.mutation(n);
+    }
+
     predict(arr, actionFunction='sigmoid') {
         let output;
         if (actionFunction === 'sigmoid') {
