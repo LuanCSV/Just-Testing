@@ -338,7 +338,7 @@ function calculatePlayersPositions() {
             let gap = (pipe[0].y - (pipe[1].y + pipe[1].h));
             ctx.beginPath();
             let targetY = pipe[0].y - ((gap/2)-10) -(p.h/2);
-            let targetX = pipe[0].x - (pipe[0].w/2) + (p.w);
+            let targetX = pipe[0].x - ((pipe[0].w/2)-30) + (p.w);
             lineGapPipeY = targetY;
             lineGapPipeX = targetX;
             p.sensor.x = Math.ceil(p.x - targetX);
