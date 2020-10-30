@@ -1,6 +1,7 @@
 import Images from './Images.js';
 import Pipe from './Pipe.js';
 import Player from './Player.js';
+import Utils from './Utils.js';
 
 var canvas = document.querySelector(`canvas`);
 const ctx = canvas.getContext('2d');
@@ -33,7 +34,7 @@ var autoMove = false;
 
 document.querySelector('#startGame').addEventListener('click', createControlPlayer);
 document.querySelector('#startPopulation').addEventListener('click', createPlayers);
-// document.querySelector('#addPipe').addEventListener('click', createPipe);
+document.querySelector('#addPipe').addEventListener('click', createPipe);
 document.addEventListener('keydown', sendCommandToPlayer);
 // Images
 const { ImgBackground, ImgBase } = Images;
@@ -102,8 +103,15 @@ function createPipe() {
     p2.y = p.y;
     p2.mirror = true;
     p2.y -= [p.h + spaceBetwwenPipes];
+    p2.upOrDown = p.upOrDown;
     pipes.push(p2);
+    
+    if (pontos > 2) {
+        p.spriteActive = Utils.randomIntFromRange(0, 1);
+        p2.spriteActive = p.spriteActive;
+    }
 }
+
 
 function drawBackground() {
     ctx.beginPath();
@@ -162,6 +170,15 @@ function drawPipes() {
         p.x -= speedGame;
         const img = p.sprites[p.spriteActive];
         ctx.beginPath();
+
+        if (p.spriteActive === 1) {
+            if (p.upOrDown > 0) {
+                p.y -= 0.5;
+            }else {
+                p.y += 0.5;
+            }
+        }
+
         if (p.mirror) {
             ctx.save();
             ctx.scale(1, -1);
@@ -170,6 +187,8 @@ function drawPipes() {
         }else{
             ctx.drawImage(img, p.x, p.y, p.w, p.h);
         }
+
+        
         ctx.closePath();
     }
 }
@@ -181,7 +200,6 @@ function verifyCollisions() {
             playersAlive++;
             if ((p.y + p.h) > canvas.height - 112) {
                 p.alive = false;
-
                 
             } else {
                 

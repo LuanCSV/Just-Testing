@@ -9,6 +9,9 @@ export default class Pipe {
 		this.h = 320;
 		this.sprites = [Images.ImgPipeGreen, Images.ImgPipeRed];
 		this.spriteActive = 0;
+		this.speedMove = 1;
 		this.mirror = false;
+		this.upOrDown = Utils.randomIntFromRange(-1, 1);
 	}
+
 }
