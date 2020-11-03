@@ -4,54 +4,18 @@
   box-sizing: border-box;
 }
 
+body {
+  min-height: 100vh;
+}
+
+main {
+  margin-top: 80px;
+  padding: 16px;
+}
+
 .App{
-  height: 100vh;
-  width: 100vw;
-  background-color: #242424;
+  min-height: 100vh;
+  max-width: 100vw;
+  background-color: #323232;
 }
 
-.header .header-title{
-  display: flex;
-  align-items: center;
-  margin: 0px 30px;
-}
-
-.header .header-title h1{
-  margin-left: 10px;
-}
-.header .header-search{
-  width: 40%;
-}
-.header .header-search .searchBar{
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  margin-right: 10px;
-  width: 70%;
-}
-.header .header-search .searchBar:focus{
-  background-color: aliceblue;
-  outline: transparent;
-}
-
-.header .header-search .searchButton{
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: bolder;
-  border: none;
-  outline: transparent;
-  transition: all ease-in-out .2s;
-
-  background-color: orangered;
-  color: whitesmoke;
-}
-
-.header .header-search .searchButton:hover{
-  background-color: crimson;
-  color: whitesmoke;
-}
-.header .header-search .searchButton:focus{
-  background-color: #a0112e;
-  color: whitesmoke;
-}

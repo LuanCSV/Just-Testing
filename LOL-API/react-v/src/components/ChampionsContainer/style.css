@@ -1,0 +1,21 @@
+.containerr{
+  width: 90%;
+  margin: 0px auto;
+  background-color: #242424;
+  text-align: center;
+  border-radius: 30px ;
+  color: whitesmoke;
+}
+
+.container hr{
+  width: 95%;
+  margin: 20px auto;
+  color: black;
+}
+
+.cards{
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.363);
+  flex-wrap: wrap;
+}
+

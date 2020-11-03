@@ -13,10 +13,6 @@ const Header = ({currentDevice}) => {
   const toggleActiveMenu = () => {
     setActiveMenu(!activeMenu);
   }
-
-  console.log(activeMenu)
-  console.log(currentDevice)
-
   const searchChampions = () => {}
 
   return (

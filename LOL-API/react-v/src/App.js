@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import Header from './components/Header';
+import { detectarDevice } from './Helpers/Device';
 
 import './App.css';
-import { detectarDevice } from './Helpers/Device';
+
+import Header from './components/Header';
+import Routes from './routes'
 
 function App() {
 
@@ -22,6 +24,7 @@ function App() {
   return (
     <div className="App">
       <Header currentDevice={currentDevice}/>
+      <Routes/>
     </div>
   );
 }
