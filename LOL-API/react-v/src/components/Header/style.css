@@ -5,17 +5,56 @@
 
 
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 80px;
+
+  position: fixed;
+
+  margin: 0;
 }
 
-.header nav{
-  display: flex;
-  align-items: center;
-
+.header-bars{
   margin: 0px 30px;
 }
 
-.header nav h1{
-  margin-left: 10px;
+.mobile .header-bars,
+.tablet .header-bars {
+  height: 50px;
+  width: 50px;
+  order: 2;
+  cursor: pointer;
+  display: inline-block;
+  transition: all .8s ease-in-out;
+}
+
+
+.desktop .header-bars,
+.laptop .header-bars,
+.ultrawide .header-bars{
+  display: none;
+}
+
+
+.mobile .header-search,
+.tablet .header-search{
+  background-color: #701b80;
+  opacity: 0;
+  padding: 24px;
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  text-align: center;
+  transition: all .5s ease-in-out;
+}
+
+.mobile .header-search.active-menu,
+.tablet .header-search.active-menu {
+  opacity: 1;
+  width: 100%;
+}
+
+.mobile .header-search.active-menu .searchBar,
+.tablet .header-search.active-menu .searchBar{
+  width: 60%;
 }
