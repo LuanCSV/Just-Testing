@@ -1,7 +1,8 @@
 .card{
-  background-color: black;
+  background-color: #0000005d;
   height: 300px;
   width: 23%;
   min-width: 250px;
+  max-width: 300px;
   margin: 20px auto;
 }

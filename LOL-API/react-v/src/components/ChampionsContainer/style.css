@@ -1,6 +1,6 @@
 .containerr{
   width: 90%;
-  margin: 0px auto;
+  margin: 100px auto;
   background-color: #242424;
   text-align: center;
   border-radius: 30px ;
@@ -15,7 +15,6 @@
 
 .cards{
   display: flex;
-  background-color: rgba(0, 0, 0, 0.363);
   flex-wrap: wrap;
 }
 
