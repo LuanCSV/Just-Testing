@@ -27,7 +27,7 @@ const ChampionsContainer = () => {
 
   return (
     <main className="containerr">
-      <h1>Personagens</h1>
+      <h2 className="personagens">Personagens</h2>
       <hr/>
       <section className="cards">
 

@@ -7,14 +7,23 @@ const ChampionCard = ({...champ}) => {
     name,
     id,
     title,
-    image,
-    tags,
-    blurb
+    tags
    } = champ
-
   return (
     <article className="card">
-      {name}
+      <div className="card-image">
+        <img 
+          src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${id}_0.jpg`}
+          alt={`Imagem do campeao ${name} de league of legends`}
+        />
+      </div>
+      
+      <div className="card-body">
+        <h2> { name }</h2>
+        <p>{title}</p> 
+        <small> {tags.length > 1 ? `${tags[0]} / ${tags[1]}` : `${tags}`} </small>
+        <a href="https://universe.leagueoflegends.com/pt_BR/champion/${id}/" target="_blank" class="info">More info</a>
+      </div>
     </article>
   )
 }

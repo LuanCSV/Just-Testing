@@ -2,11 +2,13 @@
   width: 90%;
   margin: 100px auto;
   background-color: #242424;
-  text-align: center;
+  
   border-radius: 30px ;
   color: whitesmoke;
 }
-
+.containerr .personagens{
+  text-align: center;
+}
 .container hr{
   width: 95%;
   margin: 20px auto;
