@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import bars from '../../bars-solid.svg';
 import times from '../../times-solid.svg';
 import './style.css';
