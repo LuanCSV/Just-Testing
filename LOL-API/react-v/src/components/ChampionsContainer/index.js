@@ -8,19 +8,21 @@ const ChampionsContainer = () => {
 
   const [activeChampions, setActiveChampions] = useState([]);
 
-  let champions = []
-
+  const champions = [];
+  
   useEffect(() => {
     fetch(URL)
-      .then(res => res.json())
-      .then(json => {
-        const dataChamps = json.data;
+    .then(res => res.json())
+    .then(json => {
+      const dataChamps = json.data;
 
-        for (const k in dataChamps) {
-          champions.push(dataChamps[k])
-        }
-        setActiveChampions(champions);
-      }) 
+      for (const k in dataChamps) {
+        champions.push(dataChamps[k])
+      }
+      setActiveChampions(champions);
+    })
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [URL])
 
   console.log(activeChampions)
@@ -28,12 +30,12 @@ const ChampionsContainer = () => {
   return (
     <main className="containerr">
       <h2 className="personagens">Personagens</h2>
-      <hr/>
+      <hr />
       <section className="cards">
 
         {activeChampions.map((champ, index) => {
           return (
-            <ChampionCard key={index} {...champ}/>
+            <ChampionCard key={index} {...champ} />
           )
         })}
 
