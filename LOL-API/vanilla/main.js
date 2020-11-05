@@ -76,4 +76,3 @@ document.querySelector('#searchButton').addEventListener('click', (event) => {
     searchChampions();
 })
 
-console.dir(searchBar)

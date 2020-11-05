@@ -1,0 +1,13 @@
+body{
+  background: #242424;
+}
+
+#screen{
+  border: 5px solid crimson;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  background: #424242;
+
+  width: 700px;
+}
