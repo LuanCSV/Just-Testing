@@ -76,6 +76,32 @@ export default class Matrix {
         });
     }
 
+    static escalar_multiply(A, escalar){
+        var matrix = new Matrix(A.rows, A.cols);
+        matrix.map((num, i, j) => {
+            return A.data[i][j] * escalar;
+        });
+        return matrix;
+    }
+
+    //transforma cols em rows e rows em cols
+    static transpose(A) {
+        var matrix = new Matrix(A.cols, A.rows);
+        matrix.map((num, i, j) => {
+            return A.data[j][i];
+        })
+        return matrix;
+    }
+
+    //
+    static hadamard(A,B) {
+        var matrix = new Matrix(A.cols, B.cols);
+        matrix.map((num, i, j) => {
+            return A.data[i][j] * B.data[i][j];
+        });
+        return matrix;
+    }
+
     // USADO PARA PESOS / BIAS / OS CALCULOS
     static arrayToMatrix(arr) {
         let matrix = new Matrix(arr.length, 1);
