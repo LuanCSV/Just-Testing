@@ -125,7 +125,7 @@ export default class NeuralNetwork {
 
         this.bias_ih = Matrix.add(this.bias_ih, gradient_h);
 
-        let weights_ih_deltas = Matrix.multiply(this.weights_ih, input_t);
+        let weights_ih_deltas = Matrix.multiply(gradient_h, input_t);
         this.weights_ih = Matrix.add(this.weights_ih, weights_ih_deltas);
         
     }

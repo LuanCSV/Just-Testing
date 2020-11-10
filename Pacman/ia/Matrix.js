@@ -21,21 +21,29 @@ export default class Matrix {
     // I > index do array
     // Num > VALOR DO INDEX
     map(func) {
-        this.data = this.data.map((arr, i) => {
-            return arr.map((num, j) => {
+        this.data = this.data.map((arr,i) => {
+            return arr.map((num,j) => {
                 return func(num, i, j);
-            })
-        })
+            });
+        });
     }
 
-    static map() {
+    static map(A, func) {
+        let matrix = new Matrix(A.rows, A.cols);
 
+        matrix.data = A.data.map((arr, i) => {
+
+            return arr.map((num, j) => {
+                return func(num, i, j);
+            });
+        });
+        return matrix;
     }
 
     // THIS > REFERENCIA A MATRIX Q VAI UTILIZAR A FUNCAO MAP
     randomize(n = 1) {
         this.map((elem, i, j) => {
-            return (Math.random() * (n * 2) + (n * -1));
+            return Math.floor(Math.random() * (n * 2) + (n * -1));
         });
     }
 
@@ -57,7 +65,7 @@ export default class Matrix {
 
     static multiply(A, B) {
         var matrix = new Matrix(A.rows, B.cols);
-        matrix.map((num, i ,j) => {
+        matrix.map((num, i, j) => {
             let sum = 0;
             for (let k = 0; k < A.cols; k++) {
                 let elem1 = A.data[i][k];
@@ -76,7 +84,7 @@ export default class Matrix {
         });
     }
 
-    static escalar_multiply(A, escalar){
+    static escalar_multiply(A, escalar) {
         var matrix = new Matrix(A.rows, A.cols);
         matrix.map((num, i, j) => {
             return A.data[i][j] * escalar;
@@ -89,13 +97,13 @@ export default class Matrix {
         var matrix = new Matrix(A.cols, A.rows);
         matrix.map((num, i, j) => {
             return A.data[j][i];
-        })
+        });
         return matrix;
     }
 
     //
-    static hadamard(A,B) {
-        var matrix = new Matrix(A.cols, B.cols);
+    static hadamard(A, B) {
+        var matrix = new Matrix(A.rows, B.cols);
         matrix.map((num, i, j) => {
             return A.data[i][j] * B.data[i][j];
         });
@@ -105,8 +113,8 @@ export default class Matrix {
     // USADO PARA PESOS / BIAS / OS CALCULOS
     static arrayToMatrix(arr) {
         let matrix = new Matrix(arr.length, 1);
-        
-        matrix.map( (elem, i ,j) => {
+
+        matrix.map((elem, i, j) => {
             return arr[i];
         });
         return matrix;

@@ -1,3 +1,5 @@
+import NeuralNetwork from "../ia/NeuralNetwork.js";
+
 export default class Player {
     constructor(color, x, y) {
         this.x = (x) ? x : 0;
@@ -9,5 +11,8 @@ export default class Player {
         this.sensor = {
             fruits: []
         }
+
+        this.dataset = { i: [], o: [] };
+        this.brain = new NeuralNetwork(2, 4, 4)
     }
 }
