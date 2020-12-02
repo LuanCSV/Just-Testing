@@ -17,7 +17,7 @@ var limitMoves = 60;
 var generation = 0;
 
 var tAutoPlay = null;
-var timeRepeatAutoPlay = 10;
+var timeRepeatAutoPlay = 50;
 var datasetTraining = {i:[], o:[]};
 var genome = null;
 
